@@ -9,22 +9,6 @@ The objective is to develop machine learning models that can classify hand-drawn
 1. [Dataset](#dataset)
 
 ## Dataset:
-The [Quick Draw Dataset](https://quickdraw.withgoogle.com/data) is a collection of 50 million drawings across 345 categories, contributed by players of the game [Quick, Draw!](https://quickdraw.withgoogle.com/). It has been compiled by Google Creative Lab to help developers train new neural networks, help researchers see patterns in how people around the world draw, and help artists create things we haven’t begun to think of.
-
-The [simplified dataset](https://console.cloud.google.com/storage/browser/quickdraw_dataset/full/simplified;tab=objects?invt=AbvrVA&prefix=&forceOnObjectsSortingFiltering=false) consists of drawings recorded as timestamped vectors, tagged with metadata. It includes the following features: 
-
-1. `word`: category of the drawing
-   
-2. `countrycode`: player's country
-   
-3. `timestamp`
-   
-4. `recognized`: indicating whether the model successfully classified the drawing
-   
-5. `key_id`
-    
-6. `drawing array`: contains x and y pixel coordinates and t, which represents the time in milliseconds since the first point.
-
 The [Quick Draw dataset](https://quickdraw.withgoogle.com/data) contains 50 million drawings contributed by over 15 million players across 345 categories. For this project, 1000 random drawings from 10 categories each have been sampled, namely ‘apple’, ‘baseball’, ‘bridge’, ‘circle’, ‘cow’, ‘flower’, ‘moustache’, ‘speedboat’, ‘square’, and ‘yoga’.
 
 Categories ‘apple, baseball, circle, flower, square’ display low intraclass and moderate interclass variations; whereas ‘bridge, cow, moustache, speedboat, yoga’ exhibit high intraclass and interclass variations.
