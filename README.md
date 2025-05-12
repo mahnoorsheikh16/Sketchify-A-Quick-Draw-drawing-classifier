@@ -7,7 +7,7 @@ The objective is to develop machine learning models that can classify hand-drawn
 
 ## Table of Contents:
 1. [Dataset](#dataset)
-2. [Initial Data Analysis (IDA)](#initialdataanalysis (ida))
+2. [Initial Data Analysis (IDA)](#initialdataanalysis(ida))
 
 ## Dataset:
 The [Quick Draw dataset](https://quickdraw.withgoogle.com/data) contains 50 million drawings contributed by over 15 million players across 345 categories. For this project, 1000 random drawings from 10 categories each have been sampled, namely ‘apple’, ‘baseball’, ‘bridge’, ‘circle’, ‘cow’, ‘flower’, ‘moustache’, ‘speedboat’, ‘square’, and ‘yoga’.
