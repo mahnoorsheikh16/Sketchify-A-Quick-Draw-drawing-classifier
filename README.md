@@ -141,7 +141,7 @@ High correlation is observed among the hue moments (as expected). Curvature and 
 ## Predictive Modeling:
 The dataset is split into train, test, and validation sets. This is done for three varying proportions to evaluate classifier performance on differing training sample sizes. The three splits are 70-15-15, 80-10-10, and 90-5-5 (train-test-validation). This translates to training sample sizes of 7000, 8000 and 9000, respectively. All classes are roughly equally represented in all training sets.
 
-**I. Feature Extraction**
+### Feature Extraction
 The ANOVA (Analysis of Variance) test evaluates if the mean of a feature differs across multiple classes. It is revealed that all features are statistically significant in distinguishing at least one class from others. Hence, no features are dropped.
 
 Sequential Forward Floating Selection (SFFS) algorithm with logistic regression classifier is implemented for each training set. An upper bound of the desired number of features is not assigned. Instead, 3-fold cross-validation is used to find the best performing feature subset. The number of features selected for each training set are 23, 26, 25 in order, with minor differences. SFBS was not selected as the feature selection method since it is more effective when a significant number of features are non-informative and +l -r was not employed since we did not have many correlated feature blocks to choose the (l,r) thresholds.
@@ -150,6 +150,4 @@ Since the number of features is still high, Principle Component Analysis is appl
 
 The last step dimensionality reduction technique employed is Multiple Discriminant Analysis (MDA) for feature projection to a further lower dimension. MDA finds linear discriminants that maximize separation between classes by maximizing between class variance and minimizing within class variance. MDA is applied on each training set and the dataset is reduced to 9 components. The classes are now more distinguishable. By using this dimensionality reduction approach, noise and redundancy is removed via PCA and a feature space that is optimized for class separability is created using MDA. Features also appear roughly bell-shaped across classes, fulfilling assumptions of normally distributed variables needed for some models ahead.
 
-**II. Modeling and Results**
-
-<u>**Bayesian Classifiers**</u>
+### Bayesian Classifiers
