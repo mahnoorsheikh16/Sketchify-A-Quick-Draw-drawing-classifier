@@ -157,7 +157,7 @@ This model assumes the likelihood function $p(x\mid \omega_j)\sim\mathcal{N}(\mu
 
 **Class-conditional PDFs estimated assuming features are independent, and every feature can be modeled using a Gaussian**
 
-This model assumes the likelihood function 𝑝(𝑥|𝜔𝑗)~𝑁(𝜇𝑗,𝜎𝑗2) follows a univariate gaussian distribution 𝑝(𝑥)=1√2𝜋𝜎2𝑒[−12(𝑥−𝜇)2𝜎2], with unknown mean and variance parameters. This means the features are uncorrelated and the covariance matrices are diagonal matrices. Since the training samples are assumed to possess the iid property, the parameters are estimated using Maximum Likelihood Estimation (MLE). The prior distribution and posterior probability are computed the same way as before.
+This model assumes the likelihood function $p(x\mid \omega_j)\sim\mathcal{N}(\mu_j,\sigma_j^2)$ follows a univariate gaussian distribution $p(x)=\frac{1}{\sqrt{2\pi\\sigma^2}}\exp\Bigl(-\tfrac12\\frac{(x-\mu)^2}{\sigma^2}\Bigr)$, with unknown mean and variance parameters. This means the features are uncorrelated and the covariance matrices are diagonal matrices. Since the training samples are assumed to possess the iid property, the parameters are estimated using Maximum Likelihood Estimation (MLE). The prior distribution and posterior probability are computed the same way as before.
 
 **Class-conditional density values of test samples estimated using the Parzen-Window non-parametric density estimation scheme with Spherical Gaussian kernel**
 
