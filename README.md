@@ -153,4 +153,12 @@ The last step dimensionality reduction technique employed is Multiple Discrimina
 ### Bayesian Classifiers
 **Class-conditional PDFs estimated assuming a Multi-Variate Gaussian density function**
 
-This model assumes the likelihood function 𝑝(𝑥|𝜔𝑗)~𝑁(𝜇𝑗,Σ𝑗) follows a multivariate gaussian distribution 𝑝(𝑥)=1(2𝜋)𝑑/2|Σ|1/2𝑒[−12(𝑥−𝜇)𝑡Σ−1(𝑥−𝜇)] for every feature. Mean, correlation matrices
+This model assumes the likelihood function $p(x\mid \omega_j)\sim\mathcal{N}(\mu_j,\Sigma_j)$ follows a multivariate gaussian distribution 𝑝(𝑥)=1(2𝜋)𝑑/2|Σ|1/2𝑒[−12(𝑥−𝜇)𝑡Σ−1(𝑥−𝜇)] for every feature. Mean, correlation matrices and the prior distribution 𝑃(𝜔𝑗) for each class are computed from the training samples. The posterior probability is computed via 𝑃(𝜔𝑗|𝑥)=𝑝(𝑥|𝜔𝑗)𝑃(𝜔𝑗).
+
+**Class-conditional PDFs estimated assuming features are independent, and every feature can be modeled using a Gaussian**
+
+This model assumes the likelihood function 𝑝(𝑥|𝜔𝑗)~𝑁(𝜇𝑗,𝜎𝑗2) follows a univariate gaussian distribution 𝑝(𝑥)=1√2𝜋𝜎2𝑒[−12(𝑥−𝜇)2𝜎2], with unknown mean and variance parameters. This means the features are uncorrelated and the covariance matrices are diagonal matrices. Since the training samples are assumed to possess the iid property, the parameters are estimated using Maximum Likelihood Estimation (MLE). The prior distribution and posterior probability are computed the same way as before.
+
+**Class-conditional density values of test samples estimated using the Parzen-Window non-parametric density estimation scheme with Spherical Gaussian kernel**
+
+This model makes no assumptions about the distribution and parameters. The dimensionality reduction pipeline tends to produce uncorrelated, scaled features with weak covariance, resulting in symmetric normal distributions. Hence, a spherical gaussian kernel 𝜑(𝑥)=1(2𝜋)4.5𝑒[−12(𝑥)𝑡(𝑥)] is best suited for these properties. The density values are estimated using 𝑝𝑛(𝑥)=1𝑛Σ1h9φ[𝑥−𝑥𝑖h]𝑛𝑖=1. Seven window width values h = [0.01, 0.1, 0.5, 1, 2, 5, 10] are evaluated on each training set using 5-fold cross-validation, and h = 0.5 is concluded the best for all. This is then used to make the final predictions. The prior distribution and posterior probability are computed the same way as before.
