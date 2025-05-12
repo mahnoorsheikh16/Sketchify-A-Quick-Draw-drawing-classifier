@@ -151,3 +151,6 @@ Since the number of features is still high, Principle Component Analysis is appl
 The last step dimensionality reduction technique employed is Multiple Discriminant Analysis (MDA) for feature projection to a further lower dimension. MDA finds linear discriminants that maximize separation between classes by maximizing between class variance and minimizing within class variance. MDA is applied on each training set and the dataset is reduced to 9 components. The classes are now more distinguishable. By using this dimensionality reduction approach, noise and redundancy is removed via PCA and a feature space that is optimized for class separability is created using MDA. Features also appear roughly bell-shaped across classes, fulfilling assumptions of normally distributed variables needed for some models ahead.
 
 ### Bayesian Classifiers
+**Class-conditional PDFs estimated assuming a Multi-Variate Gaussian density function**
+
+This model assumes the likelihood function 𝑝(𝑥|𝜔𝑗)~𝑁(𝜇𝑗,Σ𝑗) follows a multivariate gaussian distribution 𝑝(𝑥)=1(2𝜋)𝑑/2|Σ|1/2𝑒[−12(𝑥−𝜇)𝑡Σ−1(𝑥−𝜇)] for every feature. Mean, correlation matrices
