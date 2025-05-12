@@ -81,3 +81,28 @@ For illustration purposes, the preprocessed drawing array is of the form:
 `... // Additional strokes`
 
 `]`
+
+**II. Feature Engineering**
+
+59 features are extracted from the preprocessed drawing array. These encompass:
+
+Stroke Movement features: `mean_dx, mean_dy, std_dx, std_dy, max_dx, max_dy, min_dx, min_dy, num_strokes, total_points, avg_stroke_len, trajectory_len, longest_stroke, shortest_stroke, ratio_longest_shortest, var_stroke_lengths, avg_jump_distance, std_jump_distance`
+*‘dx’ and ‘dy’ are the deltas computed earlier.
+*‘jump_distance’ is the spatial distance between stroke-end and next stroke-start.
+
+Statistical features: skew_dx, skew_dy, kurtosis_dx, kurtosis_dy, q25_dx, q75_dx, q25_dy, q75_dy
+Geometric/Spatial features: bbox_width, bbox_height, bbox_area, bbox_perimeter, bbox_diagonal, aspect_ratio, centroid_x, centroid_y, start_to_centroid, end_to_centroid, avg_distance_to_centroid, std_distance_to_centroid
+*‘bbox’ refers to the bounding box for an image.
+Convex Hull features: hull_area, hull_perimeter, solidity
+*convex hull is the smallest polygon that encloses all the stroke points.
+*‘solidity’ refers to the ratio of the drawing’s filled pixel area to the total hull_area.
+Angular/Curvature features: total_angle_change, mean_segment_angle, std_segment_angle, max_angle_change, min_angle_change, avg_curvature, max_curvature, std_curvature
+*‘segment_angle’ measures the angle between two consecutive points.
+Other features: dominant_frequency, hu_1, hu_2, hu_3, hu_4, hu_5, hu_6, hu_7, fractal_dimension, straightness
+*‘dominant_frequency’ captures the dominant back-and-forth pattern/motion repeated in the overall drawing.
+*Hue Moments summarize the overall form of the drawing that don’t change if you move, resize, or rotate it, making them invariant features. Each Hu moment represents different weighted sums of pixel positions that, when combined, represent the drawing’s global outline.
+*‘fractal_dimension’ measures how detailed/complex/twisty the doodle is by counting the number of boxes of different sizes needed to cover all the strokes.
+*‘straightness’ represents if strokes were straighter or wandering.
+Finally, the dataset results in shape (10000, 60) with 10 classes. All features have numerical data types and have no missing values.
+
+
