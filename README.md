@@ -53,3 +53,31 @@ For illustration purposes, the drawing array is of the form:
 `]`
 
 ## Initial Data Analysis (IDA):
+
+**I. Data Cleaning**
+
+Since the dataset only contains individual stroke coordinates for each drawing, features need to be manually extracted. To prepare for this, the drawing array is further simplified.
+
+• Each ndjson line (row) is parsed to extract the class label and the drawing array.
+
+• The stroke data is converted into an array of shape (𝑡𝑜𝑡𝑎𝑙 𝑝𝑜𝑖𝑛𝑡𝑠,3), where columns 1 and 2 store the 𝑥 and 𝑦 pixel coordinates, and column 3 acts as a marker for the end of a stroke (0 by default and 1 at the final point of each stroke).
+
+• 𝑥 and 𝑦 coordinates are scaled [0,1] range, so all doodles share the same spatial range. This avoids introducing bias for drawings with coordinates spanning a larger range and ensures each drawing is assigned an equal weight.
+
+• Deltas are computed for the pixel coordinates, so column 1 now stores the difference between consecutive points for 𝑥 coordinates and column 2 stores the difference between consecutive points for 𝑦 coordinates.
+
+• Redundant first row is dropped since no deltas exist for the first point and the final array has shape (𝑡𝑜𝑡𝑎𝑙 𝑝𝑜𝑖𝑛𝑡𝑠−1,3).
+
+These steps are implemented on each sample and the resulting cleaned dataset has the shape (10000, 2) with 10 classes.
+
+For illustration purposes, the preprocessed drawing array is of the form:
+
+`[`
+
+`[dx0, dy0, m0],`
+
+`[dx1, dy1, m1],`
+
+`... // Additional strokes`
+
+`]`
