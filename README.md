@@ -153,11 +153,17 @@ The last step dimensionality reduction technique employed is Multiple Discrimina
 ### Bayesian Classifiers
 **Class-conditional PDFs estimated assuming a Multi-Variate Gaussian density function**
 
-This model assumes the likelihood function $p(x\mid \omega_j)\sim\mathcal{N}(\mu_j,\Sigma_j)$ follows a multivariate gaussian distribution $$
+This model assumes the likelihood function $p(x\mid \omega_j)\sim\mathcal{N}(\mu_j,\Sigma_j)$ follows a multivariate gaussian distribution 
+
+$$
 p(x)
 = \frac{1}{(2\pi)^{d/2}\,\lvert\Sigma\rvert^{1/2}}
   \exp\!\Bigl(-\tfrac12\,(x-\mu)^\top \Sigma^{-1}(x-\mu)\Bigr)
-$$ for every feature. Mean, correlation matrices and the prior distribution $P(\omega_j)$ for each class are computed from the training samples. The posterior probability is computed via $$
+$$ 
+
+for every feature. Mean, correlation matrices and the prior distribution $P(\omega_j)$ for each class are computed from the training samples. The posterior probability is computed via 
+
+$$
 P(\omega_j\mid x) \;=\; p(x\mid\omega_j)\,P(\omega_j).
 $$.
 
