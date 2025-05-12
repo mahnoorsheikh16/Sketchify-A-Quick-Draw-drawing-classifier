@@ -3,7 +3,7 @@ Teaching machines to recognize freehand sketches is both a scientific challenge 
 
 The objective is to develop machine learning models that can classify hand-drawn digital drawings or doodles by identifying the object or category they represent. For this purpose, three Bayesian classifiers, a collection of classical models (Logistic Regression, Support Vector Machine, K-NN, XGBoost), and a Recurrent Neural Network (RNN) have been trained on varying sample sizes. The following sections outline the preprocessing, feature engineering and model evaluation steps, providing insights into each model’s performance.
 
-*This is a course project for CSE 802 Pattern Recognition and Analysis at MSU.
+*This is a course project for CSE 802 Pattern Recognition and Analysis at MSU. A more detailed overview of the analysis and results can be found in the [report](https://github.com/mahnoorsheikh16/Sketchify-A-Quick-Draw-drawing-classifier/blob/main/DrawingClassifier_Report.pdf).
 
 ## Table of Contents:
 1. [Dataset](#dataset)
