@@ -8,12 +8,15 @@ The objective is to develop machine learning models that can classify hand-drawn
 ## Table of Contents:
 1. [Dataset](#dataset)
 2. [Initial Data Analysis (IDA)](#initial-data-analysis-ida)
-3. [Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)
-4. [Predictive Modeling](#predictive-modeling)
+   - [Data Cleaning](#data-cleaning)
+   - [Feature Engineering](#feature-engineering)
+   - [Data Normalization](#data-normalization)
+4. [Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)
+5. [Predictive Modeling](#predictive-modeling)
    - [Feature Extraction](#feature-extraction)  
    - [Bayesian Classifiers (based on maximum a posteriori principle)](#bayesian-classifiers) 
 
-## Dataset:
+## Dataset
 The [Quick Draw dataset](https://quickdraw.withgoogle.com/data) contains 50 million drawings contributed by over 15 million players across 345 categories. For this project, 1000 random drawings from 10 categories each have been sampled, namely ‘apple’, ‘baseball’, ‘bridge’, ‘circle’, ‘cow’, ‘flower’, ‘moustache’, ‘speedboat’, ‘square’, and ‘yoga’.
 
 Categories ‘apple, baseball, circle, flower, square’ display low intraclass and moderate interclass variations; whereas ‘bridge, cow, moustache, speedboat, yoga’ exhibit high intraclass and interclass variations.
@@ -56,9 +59,8 @@ For illustration purposes, the drawing array is of the form:
 
 `]`
 
-## Initial Data Analysis (IDA):
-**I. Data Cleaning**
-
+## Initial Data Analysis (IDA)
+### Data Cleaning
 Since the dataset only contains individual stroke coordinates for each drawing, features need to be manually extracted. To prepare for this, the drawing array is further simplified.
 
 • Each ndjson line (row) is parsed to extract the class label and the drawing array.
@@ -85,8 +87,7 @@ For illustration purposes, the preprocessed drawing array is of the form:
 
 `]`
 
-**II. Feature Engineering**
-
+### Feature Engineering
 59 features are extracted from the preprocessed drawing array. These encompass:
 
 Stroke Movement features: `mean_dx, mean_dy, std_dx, std_dy, max_dx, max_dy, min_dx, min_dy, num_strokes, total_points, avg_stroke_len, trajectory_len, longest_stroke, shortest_stroke, ratio_longest_shortest, var_stroke_lengths, avg_jump_distance, std_jump_distance`
@@ -123,8 +124,7 @@ Other features: `dominant_frequency, hu_1, hu_2, hu_3, hu_4, hu_5, hu_6, hu_7, f
 
 Finally, the dataset results in shape (10000, 60) with 10 classes. All features have numerical data types and have no missing values.
 
-**III. Data Normalization**
-
+### Data Normalization
 To convert all numerical features to the same range to avoid model bias, Z-score normalization and Min-Max scaling are employed. Z-score normalization centers each feature around 0 with a unit variance and Min-Max scaling transforms all feature values to the [0,1] scale. Silhouette scores and t-SNE plots are used to conclude the most suitable scaling method for our data, hence we compare the results for unscaled, Z-normalized and MinMax scaled datasets.
 
 Silhouette scores indicate how well-clustered the data points are, with a high score being preferred. Unscaled data gives the highest score of 0.478, followed by MinMax scaled data (0.162), and Z-normalized displays the lowest score of 0.084. This indicates that unscaled data results in distinguishing clusters, however, this information may not be accurate since the score is calculated using the distance metric and the larger numerical ranges of unscaled data can dominate the distance calculation. Hence, t-SNE plots are further used to visualize the underlying structure. These use two-dimensional plots that emphasize local relationships and preserve neighborhood structures.
@@ -133,12 +133,12 @@ Unscaled data does not result in better class separability. In comparison, the o
 
 Based on these evaluations, further modeling and analysis has been conducted on Z-score normalized data.
 
-## Exploratory Data Analysis (EDA):
+## Exploratory Data Analysis (EDA)
 Histograms for each feature across all classes reveal that most features have unimodal distributions, with some representing gaussian distributions and some showing a more skewed structure. All feature distributions depict high overlap among classes.
 
 High correlation is observed among the hue moments (as expected). Curvature and geometric features based on the bounding box also display high correlation. This can also be expected since these have been derived from similar underlying variables. The remaining features display moderate to low correlation. Since high correlation could lead to multicollinearity issues and interfere with model stability, dimensionality reduction techniques will be applied ahead.
 
-## Predictive Modeling:
+## Predictive Modeling
 The dataset is split into train, test, and validation sets. This is done for three varying proportions to evaluate classifier performance on differing training sample sizes. The three splits are 70-15-15, 80-10-10, and 90-5-5 (train-test-validation). This translates to training sample sizes of 7000, 8000 and 9000, respectively. All classes are roughly equally represented in all training sets.
 
 ### Feature Extraction
