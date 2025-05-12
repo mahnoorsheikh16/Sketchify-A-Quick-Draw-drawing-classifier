@@ -151,6 +151,7 @@ Since the number of features is still high, Principle Component Analysis is appl
 
 The last step dimensionality reduction technique employed is Multiple Discriminant Analysis (MDA) for feature projection to a further lower dimension. MDA finds linear discriminants that maximize separation between classes by maximizing between class variance and minimizing within class variance. MDA is applied on each training set and the dataset is reduced to 9 components. The plot below shows MDA class separability using first two MDA components. It can be seen that the classes are now more distinguishable.
 ![image](https://github.com/user-attachments/assets/6b65f4e6-8056-4fca-99f2-224cb45a4c37)
+
 The classes are now more distinguishable. By using this dimensionality reduction approach, noise and redundancy is removed via PCA and a feature space that is optimized for class separability is created using MDA. Features also appear roughly bell-shaped across classes, fulfilling assumptions of normally distributed variables needed for some models ahead.
 ![image](https://github.com/user-attachments/assets/5f579945-549d-442b-9b36-2812e25f7b93)
 
