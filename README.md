@@ -137,6 +137,8 @@ Unscaled data does not result in better class separability. In comparison, the o
 Based on these evaluations, further modeling and analysis has been conducted on Z-score normalized data.
 
 ## Exploratory Data Analysis (EDA)
+![image](https://github.com/user-attachments/assets/f897876a-d9f6-410c-b233-3d9d806e159a)
+
 Histograms for each feature across all classes reveal that most features have unimodal distributions, with some representing gaussian distributions and some showing a more skewed structure. All feature distributions depict high overlap among classes.
 
 High correlation is observed among the hue moments (as expected). Curvature and geometric features based on the bounding box also display high correlation. This can also be expected since these have been derived from similar underlying variables. The remaining features display moderate to low correlation. Since high correlation could lead to multicollinearity issues and interfere with model stability, dimensionality reduction techniques will be applied ahead.
