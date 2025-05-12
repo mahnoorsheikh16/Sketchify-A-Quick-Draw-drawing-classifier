@@ -14,10 +14,13 @@ The objective is to develop machine learning models that can classify hand-drawn
 4. [Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)
 5. [Predictive Modeling](#predictive-modeling)
    - [Feature Extraction](#feature-extraction)  
-   - [Bayesian Classifiers (based on maximum a posteriori principle)](#bayesian-classifiers) 
+   - [Bayesian Classifiers (based on maximum a posteriori principle)](#bayesian-classifiers)
+   - [Traditional Classifiers (Logistic regression, SVM with RBF kernel, K-NN, XGBoost)](#traditional-classifiers)
+   - [Recurrent Neural Network (RNN)](#recurrent-neural-network-rnn))
+6. [Results and Conclusion](#results-and-conclusion)
 
 ## Dataset
-The [Quick Draw dataset](https://quickdraw.withgoogle.com/data) contains 50 million drawings contributed by over 15 million players across 345 categories. For this project, 1000 random drawings from 10 categories each have been sampled, namely ‘apple’, ‘baseball’, ‘bridge’, ‘circle’, ‘cow’, ‘flower’, ‘moustache’, ‘speedboat’, ‘square’, and ‘yoga’.
+The [Quick Draw dataset](https://github.com/googlecreativelab/quickdraw-dataset?tab=readme-ov-file#projects-using-the-dataset) contains 50 million drawings contributed by over 15 million players across 345 categories. For this project, 1000 random drawings from 10 categories each have been sampled, namely ‘apple’, ‘baseball’, ‘bridge’, ‘circle’, ‘cow’, ‘flower’, ‘moustache’, ‘speedboat’, ‘square’, and ‘yoga’.
 
 Categories ‘apple, baseball, circle, flower, square’ display low intraclass and moderate interclass variations; whereas ‘bridge, cow, moustache, speedboat, yoga’ exhibit high intraclass and interclass variations.
 
@@ -171,3 +174,22 @@ This model makes no assumptions about the distribution and parameters. The dimen
 As h increases, local properties are lost, and the global shape is retained. As h decreases, density estimations display jagged behavior, with local properties retained and global shape disturbed. This may be the reason for $h = 0.5$ being an optimal window width, since it provides a balance between the two extremes. However, it can be observed from the plot that local properties like bimodal distribution are lost for the first feature with this choice of the window width.
 ![image](https://github.com/user-attachments/assets/2af6cf88-931a-41aa-8cd9-8d6a20629dd8)
 
+Non-parametric Bayesian classifier using Parzen-Window consistently achieves the highest accuracy across all train splits. This is followed by the Multivariate Gaussian Bayesian classifier. As the training set fraction increases from 70% to 90%, the overall average empirical accuracy and F1-score tend to increase. The 80% split for the training data displays the best model stability and highest performance, suggesting that too small training sample sizes may overfit the data.
+
+### Traditional Classifiers
+Four classical models have been trained on each dataset. Logistic regression is selected for a robust linear approach. SVM with RBF kernel is chosen to handle possible non-linear boundaries in the MDA transformed low dimension. K-NN classifier is selected to capture local decision boundaries. XGBoost is chosen to handle complex relationships without heavy parametric assumptions. The ensembled model is created to evaluate how well the models perform when combined.
+
+Each model has been fine-tuned using 5-fold cross-validation on the validation set to identify the best subset of hyperparameters from regularization strength, nearest neighbors, maximum depth, and learning rate. Models are then retrained using the best parameters on the training set and evaluated on the test set. The ensembled model assigns weight to each model based on the validation accuracy computed during cross-validation. The final prediction for a test sample is the class with the maximum weighted vote. Across all train set splits, accuracy peaks for SVM and the ensembled model. The plot indicates that increased training data can improve learning, but smaller validation sets may undermine model tuning, and hence, the performance.
+![image](https://github.com/user-attachments/assets/744f0d02-1fab-4a6a-945c-5c5c6bff0967)
+
+### Recurrent Neural Network (RNN)
+This model is developed with inspiration from the [RNN tutorial](https://github.com/tensorflow/docs/blob/master/site/en/r1/tutorials/sequences/recurrent_quickdraw.md) for Quick, Draw!. My approach is a pytorch implementation of the tutorial. The model uses the cleaned preprocessed drawing array developed earlier. The features extracted are not used here, instead the sequential stroke data is used to train the neural network to identify recurring patterns. Due to high storage requirements and computational complexity of RNNs, the model is tested on a single 60-20-20 train-val-test split. This split is chosen to have a balance between training and test sets, and have a large enough validation set for effective model tuning.
+
+The model architecture constitutes three 1D convolutional layers that feed into a 2–3-layer bidirectional LSTM, and a single linear output layer to predict the drawing class. The ReLU activation function is employed for all hidden layers. Hyperparameters are fine-tuned using the single hold-out validation set, which are concluded as {'conv_filters': 128, 'lstm_units': 128, 'num_lstm_layers': 2, 'dropout_rate': 0.3, 'learning_rate': 0.001}. RNN achieves the highest accuracy (83.8%) in comparison to all the models. It also outputs the best overall precision, recall, and F1-score of 84%.
+
+## Results and Conclusion
+The most distinguishable categories are simple, closed-form objects with low intraclass and moderate interclass variations, i.e. ‘apple, baseball, circle, flower, square’. They all achieved F1-score>0.88, with ‘circle’ and ‘square’ displaying almost perfect classification. ‘speedboat’ and ‘yoga’ suffer the most confusion (most frequently misclassified as each other, and ‘cow’, ‘bridge’, ‘flower’, or ‘moustache’) due to their high intraclass and interclass variability.
+
+Bayesian classifiers (non-parametric using Parzen-Window being the best one) served as good baseline models with lower accuracies but identical class distinguishability results as the more advanced models. SVM and the ensemble model achieve comparable results on the dataset. However, when the partitioning exercise is repeated multiple times (across the three splits), ensemble (20.69% ± 0.1491), K-NN (21.90% ± 0.0867), XGBoost (22.12% ± 0.0032) classifiers show the lowest variance in error rate, versus higher fluctuations for logistic regression (25.18% ± 0.5165) and SVM (20.42% ± 0.2854), underscoring the ensemble’s superior stability of balancing lower error rate and variance, making it the more robust choice. RNN classifier is the best performing model, however, since it autonomously learns complex patterns in the dataset that may not have been captured during manual feature extraction and selection.
+
+Although the dataset is roughly balanced, highly variable classes (like ‘speedboat’, ‘yoga’, ‘moustache’, ‘cow’) behave like imbalanced ones and degrade the accuracy. This suggests that more targeted feature extraction is needed for complex doodles/drawings.
