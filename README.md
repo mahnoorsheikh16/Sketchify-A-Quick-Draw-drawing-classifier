@@ -5,7 +5,7 @@ The objective is to develop machine learning models that can classify hand-drawn
 
 *This is a course project for CSE 802 Pattern Recognition and Analysis at MSU. A more detailed overview of the analysis and results can be found in the [report](https://github.com/mahnoorsheikh16/Sketchify-A-Quick-Draw-drawing-classifier/blob/main/DrawingClassifier_Report.pdf).
 
-## Table of Contents:
+## Table of Contents
 1. [Dataset](#dataset)
 2. [Initial Data Analysis (IDA)](#initial-data-analysis-ida)
    - [Data Cleaning](#data-cleaning)
